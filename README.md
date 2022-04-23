@@ -18,11 +18,12 @@ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 ```shell
 IMPORT_PREFIX="github.com/p1ass/twirp-playground"
 PROTO_SRC_PATH=./
+GO_OUT_PATH=./server
 protoc \
   --proto_path=$PROTO_SRC_PATH \
-  --go_out=./server \
+  --go_out=$GO_OUT_PATH \
   --go_opt=module=$IMPORT_PREFIX \
-  --twirp_out=module=$IMPORT_PREFIX:./server \
+  --twirp_out=module=$IMPORT_PREFIX:$GO_OUT_PATH \
   proto/**/*.proto
 ```
 

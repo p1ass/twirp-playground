@@ -1,19 +1,19 @@
 syntax = "proto3";
 package user;
-option go_package = "github.com/p1ass/twirp-playground/twirp";
+option go_package = "github.com/p1ass/twirp-playground/generated/twirp";
 
-import 'proto/common/address.proto';
+import 'proto/common/date.proto';
 
 service UserService {
   // GetUserは指定したIDのユーザーを取得する
-  rpc GetUser(GetUserReq) returns (GetUserResponse);
+  rpc GetUser(GetUserReq) returns (GetUserRes);
 }
 
 message GetUserReq {
   string id = 1; // ユーザーID
 }
 
-message GetUserResponse {
+message GetUserRes {
   User user = 1;
 }
 
@@ -21,5 +21,5 @@ message GetUserResponse {
 message User {
   string id = 1; // ユーザーID
   string name = 2; // 名前
-  common.Address address = 3; // 住所
+  common.Date birthdate = 3; // 住所
 }

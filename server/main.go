@@ -1,38 +1,34 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net/http"
 
-	"github.com/p1ass/twirp-playground/twirp"
+	"github.com/p1ass/twirp-playground/auth"
+	"github.com/p1ass/twirp-playground/generated/twirp"
+	"github.com/p1ass/twirp-playground/user"
 )
 
 func main() {
-	server := &userService{}
-	twirpHandler := twirp.NewUserServiceServer(server)
+	mux := newMux()
 
-	err := http.ListenAndServe(":8080", twirpHandler)
+	err := http.ListenAndServe(":8080", mux)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 }
 
-type userService struct {
-}
+func newMux() *http.ServeMux {
+	userService := user.NewService()
+	userServiceServer := twirp.NewUserServiceServer(userService)
 
-func (s userService) GetUser(ctx context.Context, req *twirp.GetUserReq) (*twirp.GetUserResponse, error) {
-	return &twirp.GetUserResponse{
-		User: &twirp.User{
-			Id:   req.Id,
-			Name: "test_name",
-			Address: &twirp.Address{
-				StreetAddress: "test",
-				City:          "test_ci",
-				State:         "test_state",
-				Zip:           "test_zip",
-			},
-		},
-	}, nil
+	authenticationService := auth.NewAuthService()
+	authenticationServiceServer := twirp.NewAuthenticationServiceServer(authenticationService)
+	authorizationServiceServer := twirp.NewAuthorizationServiceServer(authenticationService)
+
+	mux := http.NewServeMux()
+	mux.Handle(userServiceServer.PathPrefix(), userServiceServer)
+	mux.Handle(authenticationServiceServer.PathPrefix(), authenticationServiceServer)
+	mux.Handle(authorizationServiceServer.PathPrefix(), authorizationServiceServer)
+	return mux
 }

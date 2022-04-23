@@ -1,0 +1,18 @@
+syntax = "proto3";
+package user;
+option go_package = "github.com/p1ass/twirp-playground/generated/twirp";
+
+import 'proto/common/date.proto';
+
+service AuthenticationService {
+  rpc Authenticate(AuthenticateReq) returns (AuthenticateRes);
+}
+
+// 実際はここに認証情報がはいる
+message AuthenticateReq {
+}
+
+message AuthenticateRes {
+  common.Date authenticatedAt = 1;
+}
+

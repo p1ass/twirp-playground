@@ -1,12 +1,12 @@
 import axios from 'axios';
-import {Rpc} from "twirp-ts";
+import {Rpc, TwirpError} from "twirp-ts";
 
 const client = axios.create({
     baseURL: "http://localhost:8080/twirp",
 })
 
 export const AxiosRpcClient: Rpc = {
-    request(service, method, contentType, data) {
+    request: function (service, method, contentType, data) {
         return client.post(`${service}/${method}`, data, {
             responseType: contentType === "application/protobuf" ? 'arraybuffer' : "json",
             headers: {
@@ -14,6 +14,12 @@ export const AxiosRpcClient: Rpc = {
             }
         }).then(response => {
             return response.data
-        });
+        }).catch(error => {
+            if (error.response && error.response.data) {
+                console.log(error.response)
+                throw TwirpError.fromObject(error.response.data)
+            }
+            throw error
+        })
     }
 }

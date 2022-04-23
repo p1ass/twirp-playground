@@ -6,15 +6,22 @@ import {useEffect, useState} from "react";
 import {UserServiceClientJSON} from "../generated/proto/user/user.twirp";
 import {User} from "../generated/proto/user/user";
 import {AxiosRpcClient} from "../api/client";
+import {TwirpError} from "twirp-ts";
 
 const Home: NextPage = () => {
     const [user, setUser] = useState<User | null>(null);
     useEffect(() => {
         const asyncGetUser = async () => {
             const jsonClient = new UserServiceClientJSON(AxiosRpcClient);
-            const res = await jsonClient.GetUser({id: "idFromClient"})
-            if (res.user) {
-                setUser(res.user)
+            try {
+                const res = await jsonClient.GetUser({id: "dummyId"})
+                if (res.user) {
+                    setUser(res.user)
+                }
+            } catch (e) {
+                if (e instanceof TwirpError) {
+                    console.error(e.message)
+                }
             }
         }
         asyncGetUser()

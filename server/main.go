@@ -5,30 +5,41 @@ import (
 	"net/http"
 
 	"github.com/p1ass/twirp-playground/auth"
-	"github.com/p1ass/twirp-playground/generated/twirp"
+	"github.com/p1ass/twirp-playground/generated/pb"
 	"github.com/p1ass/twirp-playground/user"
+	"github.com/rs/cors"
 )
 
 func main() {
-	mux := newMux()
+	handler := newHandler()
 
-	err := http.ListenAndServe(":8080", mux)
+	err := http.ListenAndServe(":8080", handler)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func newMux() *http.ServeMux {
+func newHandler() http.Handler {
 	userService := user.NewService()
-	userServiceServer := twirp.NewUserServiceServer(userService)
+	userServiceServer := pb.NewUserServiceServer(userService)
 
 	authenticationService := auth.NewAuthService()
-	authenticationServiceServer := twirp.NewAuthenticationServiceServer(authenticationService)
-	authorizationServiceServer := twirp.NewAuthorizationServiceServer(authenticationService)
+	authenticationServiceServer := pb.NewAuthenticationServiceServer(authenticationService)
+	authorizationServiceServer := pb.NewAuthorizationServiceServer(authenticationService)
 
 	mux := http.NewServeMux()
 	mux.Handle(userServiceServer.PathPrefix(), userServiceServer)
 	mux.Handle(authenticationServiceServer.PathPrefix(), authenticationServiceServer)
 	mux.Handle(authorizationServiceServer.PathPrefix(), authorizationServiceServer)
-	return mux
+
+	// Make a CORS wrapper:
+	corsWrapper := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost:3000"},
+		AllowedMethods: []string{"POST"},
+		AllowedHeaders: []string{"Content-Type"},
+	})
+
+	handler := corsWrapper.Handler(mux)
+
+	return handler
 }

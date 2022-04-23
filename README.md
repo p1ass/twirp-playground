@@ -31,6 +31,22 @@ Goのimportパスを正しくするために、オプションを設定してい
 
 https://twitchtv.github.io/twirp/docs/command_line.html#modifying-imports
 
+```shell
+PROTOC_GEN_TWIRP_BIN="./client/node_modules/.bin/protoc-gen-twirp_ts"
+PROTOC_GEN_TS_BIN="./client/node_modules/.bin/protoc-gen-ts"
+
+OUT_DIR="./client/generated"
+
+protoc \
+  --plugin=protoc-gen-ts=$PROTOC_GEN_TS_BIN \
+  --plugin=protoc-gen-twirp_ts=$PROTOC_GEN_TWIRP_BIN \
+  --ts_opt=client_none \
+  --ts_opt=generate_dependencies \
+  --ts_out=$OUT_DIR \
+  --twirp_ts_out=$OUT_DIR \
+  ./proto/**/*.proto
+```
+
 ## Server実装
 
 [server/README.md](server/README.md)を参照。

@@ -20,9 +20,9 @@ IMPORT_PREFIX="github.com/p1ass/twirp-playground"
 PROTO_SRC_PATH=./
 protoc \
   --proto_path=$PROTO_SRC_PATH \
-  --go_out=. \
+  --go_out=./server \
   --go_opt=module=$IMPORT_PREFIX \
-  --twirp_out=module=$IMPORT_PREFIX:. \
+  --twirp_out=module=$IMPORT_PREFIX:./server \
   proto/**/*.proto
 ```
 

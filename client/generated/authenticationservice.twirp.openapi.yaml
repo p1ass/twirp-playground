@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: AuthenticationService
+  version: 1.0.0
+  description: ""
+paths:
+  /user.AuthenticationService/Authenticate:
+    post:
+      summary: ""
+      operationId: AuthenticationService_Authenticate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthenticateReq"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthenticateRes"
+components:
+  schemas:
+    AuthenticateReq:
+      properties: {}
+      description: 実際はここに認証情報がはいる
+    AuthenticateRes:
+      properties:
+        authenticatedAt:
+          $ref: "#/components/schemas/Date"
+      description: ""

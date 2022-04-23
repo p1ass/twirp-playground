@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: AuthorizationService
+  version: 1.0.0
+  description: ""
+paths:
+  /user.AuthorizationService/Authorize:
+    post:
+      summary: ""
+      operationId: AuthorizationService_Authorize
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorizeReq"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorizeRes"
+components:
+  schemas:
+    AuthorizeReq:
+      properties: {}
+      description: 実際はここに認証情報がはいる
+    AuthorizeRes:
+      properties:
+        authenticatedAt:
+          $ref: "#/components/schemas/Date"
+      description: ""

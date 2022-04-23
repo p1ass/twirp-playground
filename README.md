@@ -44,6 +44,7 @@ protoc \
   --ts_opt=generate_dependencies \
   --ts_out=$OUT_DIR \
   --twirp_ts_out=$OUT_DIR \
+  --twirp_ts_opt="openapi_twirp" \
   ./proto/**/*.proto
 ```
 

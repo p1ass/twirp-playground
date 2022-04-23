@@ -1,0 +1,36 @@
+openapi: 3.0.3
+info:
+  title: UserService
+  version: 1.0.0
+  description: ""
+paths:
+  /user.UserService/GetUser:
+    post:
+      summary: GetUserは指定したIDのユーザーを取得する
+      operationId: UserService_GetUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetUserReq"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetUserRes"
+components:
+  schemas:
+    GetUserReq:
+      properties:
+        id:
+          type: string
+          description: ユーザーID
+      description: ""
+    GetUserRes:
+      properties:
+        user:
+          $ref: "#/components/schemas/User"
+      description: ""

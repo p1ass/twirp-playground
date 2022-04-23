@@ -2,6 +2,15 @@
 
 Twirpのサーバー実装
 
+## 起動方法
+
+```shell
+$ pwd
+/path/to/twirp-playground/server
+
+$ go run main.go
+```
+
 ## リクエストの送信テスト
 
 ```shell

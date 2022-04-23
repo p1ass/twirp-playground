@@ -10,6 +10,7 @@ import {TwirpError} from "twirp-ts";
 
 const Home: NextPage = () => {
     const [user, setUser] = useState<User | null>(null);
+    // 雑にAPIを叩いてみる
     useEffect(() => {
         const asyncGetUser = async () => {
             const jsonClient = new UserServiceClientJSON(AxiosRpcClient);
@@ -19,8 +20,11 @@ const Home: NextPage = () => {
                     setUser(res.user)
                 }
             } catch (e) {
+                // これでエラーハンドリングできる
                 if (e instanceof TwirpError) {
+                    console.error(e.code)
                     console.error(e.message)
+                    console.error(e.meta)
                 }
             }
         }

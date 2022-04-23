@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css'
 import {useEffect, useState} from "react";
 import {UserServiceClientJSON} from "../generated/proto/user/user.twirp";
 import {User} from "../generated/proto/user/user";
-import {AxiosRpcClient} from "../api/client";
+import {AxiosRpcClient} from "../apiclient/axios";
 import {TwirpError} from "twirp-ts";
 
 const Home: NextPage = () => {

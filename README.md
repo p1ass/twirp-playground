@@ -26,8 +26,10 @@ protoc \
   proto/**/*.proto
 ```
 
---twirp_out=import_prefix=$IMPORT_PREFIX:$PROTO_SRC_PATH \
-
 Goのimportパスを正しくするために、オプションを設定している。
 
 https://twitchtv.github.io/twirp/docs/command_line.html#modifying-imports
+
+## Server実装
+
+[server/README.md](server/README.md)を参照。

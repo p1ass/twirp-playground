@@ -1,0 +1,25 @@
+syntax = "proto3";
+package user;
+option go_package = "github.com/p1ass/twirp-playground/twirp";
+
+import 'proto/common/address.proto';
+
+service UserService {
+  // GetUserは指定したIDのユーザーを取得する
+  rpc GetUser(GetUserReq) returns (GetUserResponse);
+}
+
+message GetUserReq {
+  string id = 1; // ユーザーID
+}
+
+message GetUserResponse {
+  User user = 1;
+}
+
+// ユーザーを表すmessage
+message User {
+  string id = 1; // ユーザーID
+  string name = 2; // 名前
+  common.Address address = 3; // 住所
+}

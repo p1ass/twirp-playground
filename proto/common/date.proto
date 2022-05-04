@@ -4,6 +4,8 @@ package common;
 
 option go_package = "github.com/p1ass/twirp-playground/generated/pb";
 
+// 実際のプロダクトでは、Timestamp型を使うことが多いが、共通で使われるmessageの処理のサンプルのために定義している。
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Timestamp
 message Date {
   int32 year = 1;
   int32 month = 2;

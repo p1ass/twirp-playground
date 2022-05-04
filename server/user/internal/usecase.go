@@ -11,7 +11,6 @@ import (
 var _ pb.UserService = (*User)(nil)
 
 // User は境界づけられたコンテキストである「ユーザー」のサービスです。
-// 現在はモジュラモノリスですが、今後マイクロサービスとして分離される可能性があります。
 type User struct {
 }
 
@@ -23,6 +22,7 @@ func (s User) GetUser(ctx context.Context, req *pb.GetUserReq) (*pb.GetUserRes, 
 	if req.GetId() == "" {
 		return nil, twirp.InvalidArgumentError("id", "id is required")
 	}
+	// NOTE: 今回はサンプルなので、適当な値を返す
 	return &pb.GetUserRes{
 		User: &pb.User{
 			Id:   req.Id,

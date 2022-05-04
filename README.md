@@ -16,6 +16,13 @@ brew install protobuf
 ./script/generate-twirp-code.sh
 ```
 
+## Protobufのフォーマット
+
+```shell
+brew install clang-format
+find ./proto -name "*.proto" | xargs clang-format -i
+```
+
 ## Server実装
 
 [server/README.md](server/README.md)を参照。

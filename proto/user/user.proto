@@ -13,13 +13,11 @@ message GetUserReq {
   string id = 1; // ユーザーID
 }
 
-message GetUserRes {
-  User user = 1;
-}
+message GetUserRes { User user = 1; }
 
 // ユーザーを表すmessage
 message User {
-  string id = 1; // ユーザーID
-  string name = 2; // 名前
+  string id = 1;             // ユーザーID
+  string name = 2;           // 名前
   common.Date birthdate = 3; // 住所
 }

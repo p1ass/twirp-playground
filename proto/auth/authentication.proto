@@ -9,7 +9,4 @@ service AuthenticationService {
   rpc Authenticate(google.protobuf.Empty) returns (AuthenticateRes);
 }
 
-message AuthenticateRes {
-  common.Date authenticatedAt = 1;
-}
-
+message AuthenticateRes { common.Date authenticatedAt = 1; }

@@ -9,10 +9,6 @@ service AuthorizationService {
 }
 
 // 実際はここに認証情報がはいる
-message AuthorizeReq {
-}
+message AuthorizeReq {}
 
-message AuthorizeRes {
-  common.Date authenticatedAt = 1;
-}
-
+message AuthorizeRes { common.Date authenticatedAt = 1; }

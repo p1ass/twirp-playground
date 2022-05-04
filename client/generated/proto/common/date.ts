@@ -12,6 +12,9 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 /**
+ * 実際のプロダクトでは、Timestamp型を使うことが多いが、共通で使われるmessageの処理のサンプルのために定義している。
+ * https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Timestamp
+ *
  * @generated from protobuf message common.Date
  */
 export interface Date {

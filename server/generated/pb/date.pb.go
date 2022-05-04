@@ -20,6 +20,8 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// 実際のプロダクトでは、Timestamp型を使うことが多いが、共通で使われるmessageの処理のサンプルのために定義している。
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Timestamp
 type Date struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

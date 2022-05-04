@@ -8,7 +8,7 @@ import {
   TwirpContentType,
   chainInterceptors,
 } from "twirp-ts";
-import { AuthorizeReq, AuthorizeRes } from "./authorizqation";
+import { AuthorizeReq, AuthorizeRes } from "./authorization";
 
 //==================================//
 //          Client Code             //

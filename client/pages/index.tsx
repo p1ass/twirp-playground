@@ -6,7 +6,7 @@ import { UserServiceClientJSON } from '../generated/proto/user/user.twirp'
 import { User } from '../generated/proto/user/user'
 import { AxiosRpcClient } from '../apiclient/axios'
 import { TwirpError } from 'twirp-ts'
-import { AuthorizationServiceClientJSON } from '../generated/proto/auth/authorizqation.twirp'
+import { AuthorizationServiceClientJSON } from '../generated/proto/auth/authorization.twirp'
 
 const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>(null)

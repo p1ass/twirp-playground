@@ -22,7 +22,7 @@ brew install protobuf
 
 ## Client実装
 
-[axios/README.md](client/README.md)を参照。
+[frontend/README.md](frontend/README.md)を参照。
 
 ## リファレンス
 

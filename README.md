@@ -32,14 +32,14 @@ Goのimportパスを正しくするために、オプションを設定してい
 https://twitchtv.github.io/twirp/docs/command_line.html#modifying-imports
 
 ```shell
-cd axios
+cd client
 yarn
 cd ..
 
-PROTOC_GEN_TWIRP_BIN="./axios/node_modules/.bin/protoc-gen-twirp_ts"
-PROTOC_GEN_TS_BIN="./axios/node_modules/.bin/protoc-gen-ts"
+PROTOC_GEN_TWIRP_BIN="./client/node_modules/.bin/protoc-gen-twirp_ts"
+PROTOC_GEN_TS_BIN="./client/node_modules/.bin/protoc-gen-ts"
 
-OUT_DIR="./axios/generated"
+OUT_DIR="./client/generated"
 
 protoc \
   --plugin=protoc-gen-ts=$PROTOC_GEN_TS_BIN \

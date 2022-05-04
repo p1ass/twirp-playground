@@ -8,7 +8,8 @@ import {
   TwirpContentType,
   chainInterceptors,
 } from "twirp-ts";
-import { AuthenticateReq, AuthenticateRes } from "./authentication";
+import { Empty } from "../../google/protobuf/empty";
+import { AuthenticateRes } from "./authentication";
 
 //==================================//
 //          Client Code             //
@@ -24,7 +25,7 @@ interface Rpc {
 }
 
 export interface AuthenticationServiceClient {
-  Authenticate(request: AuthenticateReq): Promise<AuthenticateRes>;
+  Authenticate(request: Empty): Promise<AuthenticateRes>;
 }
 
 export class AuthenticationServiceClientJSON
@@ -35,8 +36,8 @@ export class AuthenticationServiceClientJSON
     this.rpc = rpc;
     this.Authenticate.bind(this);
   }
-  Authenticate(request: AuthenticateReq): Promise<AuthenticateRes> {
-    const data = AuthenticateReq.toJson(request, {
+  Authenticate(request: Empty): Promise<AuthenticateRes> {
+    const data = Empty.toJson(request, {
       useProtoFieldName: true,
       emitDefaultValues: false,
     });
@@ -60,8 +61,8 @@ export class AuthenticationServiceClientProtobuf
     this.rpc = rpc;
     this.Authenticate.bind(this);
   }
-  Authenticate(request: AuthenticateReq): Promise<AuthenticateRes> {
-    const data = AuthenticateReq.toBinary(request);
+  Authenticate(request: Empty): Promise<AuthenticateRes> {
+    const data = Empty.toBinary(request);
     const promise = this.rpc.request(
       "user.AuthenticationService",
       "Authenticate",
@@ -81,7 +82,7 @@ export class AuthenticationServiceClientProtobuf
 export interface AuthenticationServiceTwirp<
   T extends TwirpContext = TwirpContext
 > {
-  Authenticate(ctx: T, request: AuthenticateReq): Promise<AuthenticateRes>;
+  Authenticate(ctx: T, request: Empty): Promise<AuthenticateRes>;
 }
 
 export enum AuthenticationServiceMethod {
@@ -114,7 +115,7 @@ function matchAuthenticationServiceRoute<T extends TwirpContext = TwirpContext>(
         ctx: T,
         service: AuthenticationServiceTwirp,
         data: Buffer,
-        interceptors?: Interceptor<T, AuthenticateReq, AuthenticateRes>[]
+        interceptors?: Interceptor<T, Empty, AuthenticateRes>[]
       ) => {
         ctx = { ...ctx, methodName: "Authenticate" };
         await events.onMatch(ctx);
@@ -131,7 +132,7 @@ function handleAuthenticateRequest<T extends TwirpContext = TwirpContext>(
   ctx: T,
   service: AuthenticationServiceTwirp,
   data: Buffer,
-  interceptors?: Interceptor<T, AuthenticateReq, AuthenticateRes>[]
+  interceptors?: Interceptor<T, Empty, AuthenticateRes>[]
 ): Promise<string | Uint8Array> {
   switch (ctx.contentType) {
     case TwirpContentType.JSON:
@@ -147,14 +148,14 @@ async function handleAuthenticateJSON<T extends TwirpContext = TwirpContext>(
   ctx: T,
   service: AuthenticationServiceTwirp,
   data: Buffer,
-  interceptors?: Interceptor<T, AuthenticateReq, AuthenticateRes>[]
+  interceptors?: Interceptor<T, Empty, AuthenticateRes>[]
 ) {
-  let request: AuthenticateReq;
+  let request: Empty;
   let response: AuthenticateRes;
 
   try {
     const body = JSON.parse(data.toString() || "{}");
-    request = AuthenticateReq.fromJson(body, { ignoreUnknownFields: true });
+    request = Empty.fromJson(body, { ignoreUnknownFields: true });
   } catch (e) {
     if (e instanceof Error) {
       const msg = "the json request could not be decoded";
@@ -165,7 +166,7 @@ async function handleAuthenticateJSON<T extends TwirpContext = TwirpContext>(
   if (interceptors && interceptors.length > 0) {
     const interceptor = chainInterceptors(...interceptors) as Interceptor<
       T,
-      AuthenticateReq,
+      Empty,
       AuthenticateRes
     >;
     response = await interceptor(ctx, request!, (ctx, inputReq) => {
@@ -188,13 +189,13 @@ async function handleAuthenticateProtobuf<
   ctx: T,
   service: AuthenticationServiceTwirp,
   data: Buffer,
-  interceptors?: Interceptor<T, AuthenticateReq, AuthenticateRes>[]
+  interceptors?: Interceptor<T, Empty, AuthenticateRes>[]
 ) {
-  let request: AuthenticateReq;
+  let request: Empty;
   let response: AuthenticateRes;
 
   try {
-    request = AuthenticateReq.fromBinary(data);
+    request = Empty.fromBinary(data);
   } catch (e) {
     if (e instanceof Error) {
       const msg = "the protobuf request could not be decoded";
@@ -205,7 +206,7 @@ async function handleAuthenticateProtobuf<
   if (interceptors && interceptors.length > 0) {
     const interceptor = chainInterceptors(...interceptors) as Interceptor<
       T,
-      AuthenticateReq,
+      Empty,
       AuthenticateRes
     >;
     response = await interceptor(ctx, request!, (ctx, inputReq) => {

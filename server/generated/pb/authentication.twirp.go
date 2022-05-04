@@ -16,6 +16,8 @@ import proto "google.golang.org/protobuf/proto"
 import twirp "github.com/twitchtv/twirp"
 import ctxsetters "github.com/twitchtv/twirp/ctxsetters"
 
+import google_protobuf "google.golang.org/protobuf/types/known/emptypb"
+
 import bytes "bytes"
 import errors "errors"
 import io "io"
@@ -33,7 +35,7 @@ const _ = twirp.TwirpPackageMinVersion_8_1_0
 // ===============================
 
 type AuthenticationService interface {
-	Authenticate(context.Context, *AuthenticateReq) (*AuthenticateRes, error)
+	Authenticate(context.Context, *google_protobuf.Empty) (*AuthenticateRes, error)
 }
 
 // =====================================
@@ -82,18 +84,18 @@ func NewAuthenticationServiceProtobufClient(baseURL string, client HTTPClient, o
 	}
 }
 
-func (c *authenticationServiceProtobufClient) Authenticate(ctx context.Context, in *AuthenticateReq) (*AuthenticateRes, error) {
+func (c *authenticationServiceProtobufClient) Authenticate(ctx context.Context, in *google_protobuf.Empty) (*AuthenticateRes, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "user")
 	ctx = ctxsetters.WithServiceName(ctx, "AuthenticationService")
 	ctx = ctxsetters.WithMethodName(ctx, "Authenticate")
 	caller := c.callAuthenticate
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *AuthenticateReq) (*AuthenticateRes, error) {
+		caller = func(ctx context.Context, req *google_protobuf.Empty) (*AuthenticateRes, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
-					typedReq, ok := req.(*AuthenticateReq)
+					typedReq, ok := req.(*google_protobuf.Empty)
 					if !ok {
-						return nil, twirp.InternalError("failed type assertion req.(*AuthenticateReq) when calling interceptor")
+						return nil, twirp.InternalError("failed type assertion req.(*google_protobuf.Empty) when calling interceptor")
 					}
 					return c.callAuthenticate(ctx, typedReq)
 				},
@@ -111,7 +113,7 @@ func (c *authenticationServiceProtobufClient) Authenticate(ctx context.Context, 
 	return caller(ctx, in)
 }
 
-func (c *authenticationServiceProtobufClient) callAuthenticate(ctx context.Context, in *AuthenticateReq) (*AuthenticateRes, error) {
+func (c *authenticationServiceProtobufClient) callAuthenticate(ctx context.Context, in *google_protobuf.Empty) (*AuthenticateRes, error) {
 	out := new(AuthenticateRes)
 	ctx, err := doProtobufRequest(ctx, c.client, c.opts.Hooks, c.urls[0], in, out)
 	if err != nil {
@@ -174,18 +176,18 @@ func NewAuthenticationServiceJSONClient(baseURL string, client HTTPClient, opts 
 	}
 }
 
-func (c *authenticationServiceJSONClient) Authenticate(ctx context.Context, in *AuthenticateReq) (*AuthenticateRes, error) {
+func (c *authenticationServiceJSONClient) Authenticate(ctx context.Context, in *google_protobuf.Empty) (*AuthenticateRes, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "user")
 	ctx = ctxsetters.WithServiceName(ctx, "AuthenticationService")
 	ctx = ctxsetters.WithMethodName(ctx, "Authenticate")
 	caller := c.callAuthenticate
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *AuthenticateReq) (*AuthenticateRes, error) {
+		caller = func(ctx context.Context, req *google_protobuf.Empty) (*AuthenticateRes, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
-					typedReq, ok := req.(*AuthenticateReq)
+					typedReq, ok := req.(*google_protobuf.Empty)
 					if !ok {
-						return nil, twirp.InternalError("failed type assertion req.(*AuthenticateReq) when calling interceptor")
+						return nil, twirp.InternalError("failed type assertion req.(*google_protobuf.Empty) when calling interceptor")
 					}
 					return c.callAuthenticate(ctx, typedReq)
 				},
@@ -203,7 +205,7 @@ func (c *authenticationServiceJSONClient) Authenticate(ctx context.Context, in *
 	return caller(ctx, in)
 }
 
-func (c *authenticationServiceJSONClient) callAuthenticate(ctx context.Context, in *AuthenticateReq) (*AuthenticateRes, error) {
+func (c *authenticationServiceJSONClient) callAuthenticate(ctx context.Context, in *google_protobuf.Empty) (*AuthenticateRes, error) {
 	out := new(AuthenticateRes)
 	ctx, err := doJSONRequest(ctx, c.client, c.opts.Hooks, c.urls[0], in, out)
 	if err != nil {
@@ -360,7 +362,7 @@ func (s *authenticationServiceServer) serveAuthenticateJSON(ctx context.Context,
 		s.handleRequestBodyError(ctx, resp, "the json request could not be decoded", err)
 		return
 	}
-	reqContent := new(AuthenticateReq)
+	reqContent := new(google_protobuf.Empty)
 	unmarshaler := protojson.UnmarshalOptions{DiscardUnknown: true}
 	if err = unmarshaler.Unmarshal(rawReqBody, reqContent); err != nil {
 		s.handleRequestBodyError(ctx, resp, "the json request could not be decoded", err)
@@ -369,12 +371,12 @@ func (s *authenticationServiceServer) serveAuthenticateJSON(ctx context.Context,
 
 	handler := s.AuthenticationService.Authenticate
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *AuthenticateReq) (*AuthenticateRes, error) {
+		handler = func(ctx context.Context, req *google_protobuf.Empty) (*AuthenticateRes, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
-					typedReq, ok := req.(*AuthenticateReq)
+					typedReq, ok := req.(*google_protobuf.Empty)
 					if !ok {
-						return nil, twirp.InternalError("failed type assertion req.(*AuthenticateReq) when calling interceptor")
+						return nil, twirp.InternalError("failed type assertion req.(*google_protobuf.Empty) when calling interceptor")
 					}
 					return s.AuthenticationService.Authenticate(ctx, typedReq)
 				},
@@ -442,7 +444,7 @@ func (s *authenticationServiceServer) serveAuthenticateProtobuf(ctx context.Cont
 		s.handleRequestBodyError(ctx, resp, "failed to read request body", err)
 		return
 	}
-	reqContent := new(AuthenticateReq)
+	reqContent := new(google_protobuf.Empty)
 	if err = proto.Unmarshal(buf, reqContent); err != nil {
 		s.writeError(ctx, resp, malformedRequestError("the protobuf request could not be decoded"))
 		return
@@ -450,12 +452,12 @@ func (s *authenticationServiceServer) serveAuthenticateProtobuf(ctx context.Cont
 
 	handler := s.AuthenticationService.Authenticate
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *AuthenticateReq) (*AuthenticateRes, error) {
+		handler = func(ctx context.Context, req *google_protobuf.Empty) (*AuthenticateRes, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
-					typedReq, ok := req.(*AuthenticateReq)
+					typedReq, ok := req.(*google_protobuf.Empty)
 					if !ok {
-						return nil, twirp.InternalError("failed type assertion req.(*AuthenticateReq) when calling interceptor")
+						return nil, twirp.InternalError("failed type assertion req.(*google_protobuf.Empty) when calling interceptor")
 					}
 					return s.AuthenticationService.Authenticate(ctx, typedReq)
 				},
@@ -1085,18 +1087,19 @@ func callClientError(ctx context.Context, h *twirp.ClientHooks, err twirp.Error)
 }
 
 var twirpFileDescriptor0 = []byte{
-	// 202 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x2f, 0x28, 0xca, 0x2f,
-	0xc9, 0xd7, 0x4f, 0x2c, 0x2d, 0xc9, 0x00, 0x13, 0xa9, 0x79, 0x25, 0x99, 0xc9, 0x89, 0x25, 0x99,
-	0xf9, 0x79, 0x7a, 0x60, 0x19, 0x21, 0x96, 0xd2, 0xe2, 0xd4, 0x22, 0x29, 0x71, 0x88, 0xb2, 0xe4,
-	0xfc, 0xdc, 0xdc, 0xfc, 0x3c, 0xfd, 0x94, 0xc4, 0x92, 0x54, 0x88, 0xb4, 0x92, 0x20, 0x17, 0xbf,
-	0x23, 0x42, 0x5b, 0x6a, 0x50, 0x6a, 0xa1, 0x92, 0x27, 0xba, 0x50, 0xb1, 0x90, 0x19, 0x17, 0x3f,
-	0x92, 0xe1, 0xa9, 0x29, 0x8e, 0x25, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0xdc, 0x46, 0x3c, 0x7a, 0x10,
-	0x23, 0xf5, 0x5c, 0x40, 0x2a, 0xd1, 0x15, 0x19, 0x85, 0x72, 0x89, 0x3a, 0xa2, 0x38, 0x2a, 0x38,
-	0xb5, 0xa8, 0x2c, 0x33, 0x39, 0x55, 0xc8, 0x86, 0x8b, 0x07, 0xd9, 0x0e, 0x21, 0x51, 0x3d, 0x90,
-	0x33, 0xf5, 0xd0, 0x9c, 0x22, 0x85, 0x55, 0xb8, 0xd8, 0xc9, 0x20, 0x4a, 0x2f, 0x3d, 0xb3, 0x24,
-	0xa3, 0x34, 0x09, 0x64, 0xbb, 0x7e, 0x81, 0x61, 0x62, 0x71, 0xb1, 0x7e, 0x49, 0x79, 0x66, 0x51,
-	0x81, 0x6e, 0x41, 0x4e, 0x62, 0x65, 0x7a, 0x51, 0x7e, 0x69, 0x5e, 0x8a, 0x7e, 0x7a, 0x6a, 0x5e,
-	0x6a, 0x11, 0xc8, 0x1d, 0xfa, 0x05, 0x49, 0x49, 0x6c, 0x60, 0xdf, 0x1a, 0x03, 0x02, 0x00, 0x00,
-	0xff, 0xff, 0x68, 0x3e, 0xd5, 0x64, 0x2f, 0x01, 0x00, 0x00,
+	// 223 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x8f, 0x31, 0x4b, 0x04, 0x31,
+	0x10, 0x85, 0x39, 0x10, 0x8b, 0x78, 0x70, 0xb0, 0x70, 0x2a, 0x6b, 0xa1, 0x58, 0xd9, 0x38, 0xa3,
+	0x27, 0xd8, 0x59, 0xac, 0x68, 0x61, 0xab, 0x60, 0x61, 0x97, 0xdd, 0x1d, 0x73, 0x81, 0xdb, 0x4c,
+	0x48, 0x26, 0xca, 0xfd, 0x7b, 0x49, 0x82, 0x78, 0x5e, 0x13, 0x08, 0xef, 0xf1, 0xbe, 0x6f, 0xd4,
+	0xb9, 0x0f, 0x2c, 0x8c, 0x3a, 0xc9, 0xba, 0x3c, 0xe4, 0xc4, 0x0e, 0x5a, 0x2c, 0x3b, 0x28, 0x49,
+	0x73, 0x90, 0x22, 0x85, 0xf6, 0xa4, 0xd6, 0x06, 0x9e, 0x26, 0x76, 0x38, 0x6a, 0xa1, 0x1a, 0xb7,
+	0x67, 0x86, 0xd9, 0x6c, 0x08, 0xcb, 0xaf, 0x4f, 0x9f, 0x48, 0x93, 0x97, 0x6d, 0x0d, 0x2f, 0x5f,
+	0xd4, 0xa2, 0xfb, 0xdb, 0xa4, 0x57, 0x8a, 0xcd, 0xbd, 0x5a, 0xec, 0x60, 0x68, 0xec, 0xe4, 0x74,
+	0x76, 0x31, 0xbb, 0x3a, 0x5a, 0xcd, 0xa1, 0x8e, 0xc3, 0x53, 0x6e, 0xee, 0x97, 0x56, 0xef, 0x6a,
+	0xd9, 0xfd, 0xd3, 0x7b, 0xa3, 0xf0, 0x65, 0x07, 0x6a, 0x1e, 0xd4, 0x7c, 0x97, 0xd1, 0x1c, 0x43,
+	0x35, 0x82, 0x5f, 0x23, 0x78, 0xce, 0x46, 0xed, 0x12, 0xf2, 0x21, 0xb0, 0xe7, 0xf3, 0x78, 0xf3,
+	0x01, 0xc6, 0xca, 0x3a, 0xf5, 0x19, 0x8f, 0xfe, 0x56, 0xc7, 0x88, 0xf2, 0x6d, 0x83, 0xbf, 0xf6,
+	0x1b, 0xbd, 0x35, 0x81, 0x93, 0x1b, 0xd1, 0x90, 0xa3, 0x90, 0x45, 0xd0, 0xf7, 0xfd, 0x61, 0x19,
+	0xbe, 0xfb, 0x09, 0x00, 0x00, 0xff, 0xff, 0x93, 0xcc, 0x66, 0x29, 0x3a, 0x01, 0x00, 0x00,
 }

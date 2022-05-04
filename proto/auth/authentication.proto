@@ -3,13 +3,10 @@ package user;
 option go_package = "github.com/p1ass/twirp-playground/generated/pb";
 
 import 'proto/common/date.proto';
+import "google/protobuf/empty.proto";
 
 service AuthenticationService {
-  rpc Authenticate(AuthenticateReq) returns (AuthenticateRes);
-}
-
-// 実際はここに認証情報がはいる
-message AuthenticateReq {
+  rpc Authenticate(google.protobuf.Empty) returns (AuthenticateRes);
 }
 
 message AuthenticateRes {

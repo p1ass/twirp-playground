@@ -24,7 +24,7 @@ protoc \
 
 echo "Generating twirp client code..."
 
-CLIENT_DIRECTORY="./client"
+CLIENT_DIRECTORY="./frontend"
 cd $CLIENT_DIRECTORY
 yarn
 cd ..
